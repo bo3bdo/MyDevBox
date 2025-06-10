@@ -1467,3 +1467,17 @@ AH00112: Warning: DocumentRoot [C:/MyDevBox/www/blog] does not exist
 AH00112: Warning: DocumentRoot [C:/MyDevBox/www/blog] does not exist
 AH00112: Warning: DocumentRoot [C:/MyDevBox/www/blog] does not exist
 [Tue Jun 10 22:49:12.497189 2025] [mpm_winnt:notice] [pid 10876:tid 428] AH00354: Child: Starting 64 worker threads.
+[Wed Jun 11 01:05:02.064115 2025] [mpm_winnt:crit] [pid 10876:tid 428] AH02538: Child: Parent process exited abruptly. Child process is ending
+[Wed Jun 11 01:05:02.064115 2025] [mpm_winnt:warn] [pid 10876:tid 1404] (OS 995)The I/O operation has been aborted because of either a thread exit or an application request.  : AH00341: winnt_accept: Asynchronous AcceptEx failed.
+[Wed Jun 11 01:05:02.064115 2025] [mpm_winnt:warn] [pid 10876:tid 1304] (OS 995)The I/O operation has been aborted because of either a thread exit or an application request.  : AH00341: winnt_accept: Asynchronous AcceptEx failed.
+[Wed Jun 11 01:05:04.078472 2025] [mpm_winnt:notice] [pid 10876:tid 428] AH00364: Child: All worker threads have exited.
+[Wed Jun 11 01:05:59.737348 2025] [core:warn] [pid 22696:tid 468] AH00098: pid file C:/MyDevBox/bin/apache/logs/httpd.pid overwritten -- Unclean shutdown of previous Apache run?
+[Wed Jun 11 01:05:59.791016 2025] [mpm_winnt:notice] [pid 22696:tid 468] AH00455: Apache/2.4.58 (Win64) PHP/8.4.8 configured -- resuming normal operations
+[Wed Jun 11 01:05:59.791016 2025] [mpm_winnt:notice] [pid 22696:tid 468] AH00456: Apache Lounge VS17 Server built: Oct 18 2023 13:03:18
+[Wed Jun 11 01:05:59.791016 2025] [core:notice] [pid 22696:tid 468] AH00094: Command line: 'C:\\MyDevBox\\bin\\apache\\bin\\httpd.exe -d C:/MyDevBox/bin/apache -f C:\\MyDevBox\\config\\httpd.conf'
+[Wed Jun 11 01:05:59.793021 2025] [mpm_winnt:notice] [pid 22696:tid 468] AH00418: Parent: Created child process 25584
+[Wed Jun 11 01:06:00.411254 2025] [mpm_winnt:notice] [pid 25584:tid 440] AH00354: Child: Starting 64 worker threads.
+[Wed Jun 11 01:07:53.356906 2025] [mpm_winnt:crit] [pid 25584:tid 440] AH02538: Child: Parent process exited abruptly. Child process is ending
+[Wed Jun 11 01:07:53.356906 2025] [mpm_winnt:warn] [pid 25584:tid 1268] (OS 995)The I/O operation has been aborted because of either a thread exit or an application request.  : AH00341: winnt_accept: Asynchronous AcceptEx failed.
+[Wed Jun 11 01:07:53.356906 2025] [mpm_winnt:warn] [pid 25584:tid 1272] (OS 995)The I/O operation has been aborted because of either a thread exit or an application request.  : AH00341: winnt_accept: Asynchronous AcceptEx failed.
+[Wed Jun 11 01:07:55.372523 2025] [mpm_winnt:notice] [pid 25584:tid 440] AH00364: Child: All worker threads have exited.
