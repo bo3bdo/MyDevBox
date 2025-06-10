@@ -1,0 +1,30 @@
+{
+  "autoStart": true,
+  "hideTaskbar": true,
+  "hardwareAccel": true,
+  "notifications": true,
+  "theme": "dark",
+  "language": "ar",
+  "minimizeToTray": true,
+  "showSplashScreen": false,
+  "autoUpdateCheck": true,
+  "services": {
+    "apache": {
+      "autoStart": false,
+      "port": 80
+    },
+    "mysql": {
+      "autoStart": false,
+      "port": 3306
+    }
+  },
+  "phpMyAdmin": {
+    "language": "ar",
+    "theme": "pmahomme"
+  },
+  "advanced": {
+    "logLevel": "info",
+    "maxLogFiles": 5,
+    "enableDebugMode": false
+  }
+}

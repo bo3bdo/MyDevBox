@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDevBox - مركز المواقع</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .status {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+        .websites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .website-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .website-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .website-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .website-card a {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .website-card a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        .info-section {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .working { color: #28a745; }
+        .not-working { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MyDevBox</h1>
+            <div class="status">✅ Apache يعمل بنجاح!</div>
+            <p>مركز إدارة جميع مواقعك المحلية</p>
+            <div>
+                <strong>الوقت:</strong> <span id="time"></span><br>
+                <strong>الخادم:</strong> Apache على البورت 80<br>
+                <strong>PHP:</strong> متاح
+            </div>
+        </div>
+
+        <div class="websites-grid">
+            <div class="website-card">
+                <h3>🎯 المواقع الأساسية</h3>
+                <a href="/aaa">AAA Site</a>
+                <a href="/ooo">OOO Site</a>
+                <a href="/new-site">New Site</a>
+                <a href="/tasks">Tasks</a>
+            </div>
+            
+            <div class="website-card">
+                <h3>🚗 مشاريع Laravel</h3>
+                <a href="/car2/public">Car2 Project</a>
+                <p><small>مشروع Laravel - استخدم /public للوصول</small></p>
+            </div>
+            
+            <div class="website-card">
+                <h3>🛠️ أدوات الإدارة</h3>
+                <a href="/phpmyadmin">phpMyAdmin</a>
+                <a href="/info.php">PHP Info</a>
+                <a href="/test.html">Test Page</a>
+            </div>
+            
+            <div class="website-card">
+                <h3>📁 ملفات PHP للاختبار</h3>
+                <a href="/mysql-test.php">MySQL Test</a>
+                <a href="/phpmyadmin-test.php">phpMyAdmin Test</a>
+                <a href="/index.php">PHP Index</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>💡 ملاحظات مهمة</h3>
+            <p>• جميع المواقع تعمل من المجلد: <code>C:\MyDevBox\www\</code></p>
+            <p>• لمشاريع Laravel: استخدم <code>/public</code> في نهاية الرابط</p>
+            <p>• Apache يعمل على البورت 80</p>
+            <p>• PHP متاح لجميع المواقع</p>
+        </div>
+    </div>
+    
+    <script>
+        function updateTime() {
+            document.getElementById('time').textContent = new Date().toLocaleString('ar-SA');
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html> 

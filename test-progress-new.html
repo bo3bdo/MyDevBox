@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معاينة التصميم الجديد - نافذة التقدم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-50px); }
+        }
+        
+        .container {
+            position: relative;
+            background: linear-gradient(145deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+            min-width: 480px;
+            max-width: 600px;
+            transform: translateY(0);
+            animation: containerPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes containerPulse {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.02); }
+        }
+        
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            animation: logoRotate 3s linear infinite;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes logoRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .message {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            font-weight: 600;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .progress-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+            background-size: 200% 100%;
+            border-radius: 25px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 65%;
+            position: relative;
+            animation: progressGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes progressGlow {
+            0%, 100% { 
+                box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+                background-position: 0% 50%;
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
+                background-position: 100% 50%;
+            }
+        }
+        
+        .progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 1.5s infinite;
+            border-radius: 25px;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 15px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .details {
+            font-size: 13px;
+            opacity: 0.85;
+            white-space: pre-line;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        .spinner-ring {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #4ecdc4;
+            border-right: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spinMultiColor 1.2s linear infinite;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        }
+        
+        @keyframes spinMultiColor {
+            0% { 
+                transform: rotate(0deg);
+                border-top-color: #4ecdc4;
+                border-right-color: #ff6b6b;
+            }
+            33% { 
+                border-top-color: #45b7d1;
+                border-right-color: #4ecdc4;
+            }
+            66% { 
+                border-top-color: #ff6b6b;
+                border-right-color: #45b7d1;
+            }
+            100% { 
+                transform: rotate(360deg);
+                border-top-color: #4ecdc4;
+                border-right-color: #ff6b6b;
+            }
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 12px;
+            height: 12px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px #4ecdc4;
+        }
+        
+        @keyframes statusPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.5);
+                opacity: 0.7;
+            }
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: floatUp 8s linear infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 70%; animation-delay: 6s; }
+        .particle:nth-child(5) { left: 90%; animation-delay: 1s; }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .demo-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .demo-button:hover {
+            background: linear-gradient(45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .demo-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            opacity: 0.7;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <div class="container">
+        <div class="status-indicator"></div>
+        
+        <div class="logo-container">
+            <div class="logo">📦</div>
+        </div>
+        
+        <div class="title">تحميل phpMyAdmin</div>
+        <div class="subtitle">MyDevBox - بيئة التطوير المحلية</div>
+        
+        <div class="message" id="message">تحميل phpMyAdmin... 65%</div>
+        
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-wrapper">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="progress-text" id="progressText">65%</div>
+            <div class="details" id="details">تم تحميل: 13.2 من 20.3 ميجابايت
+السرعة: 2.5 MB/s
+الوقت المتبقي: 3 ثواني</div>
+        </div>
+        
+        <div class="demo-buttons">
+            <button class="demo-button" onclick="simulateProgress(10)">10%</button>
+            <button class="demo-button" onclick="simulateProgress(35)">35%</button>
+            <button class="demo-button" onclick="simulateProgress(65)">65%</button>
+            <button class="demo-button" onclick="simulateProgress(90)">90%</button>
+            <button class="demo-button" onclick="simulateProgress(100)">100%</button>
+            <button class="demo-button" onclick="autoProgress()">تلقائي</button>
+        </div>
+    </div>
+    
+    <div class="info-panel">
+        <div>💡 التصميم الجديد المحسن</div>
+        <div>🎨 تأثيرات بصرية متقدمة</div>
+        <div>✨ خط Cairo العربي</div>
+    </div>
+
+    <script>
+        function simulateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const message = document.getElementById('message');
+            const details = document.getElementById('details');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = percentage + '%';
+            
+            if (percentage < 100) {
+                message.textContent = `تحميل phpMyAdmin... ${percentage}%`;
+                const downloaded = (20.3 * percentage / 100).toFixed(1);
+                const remaining = (20.3 - downloaded).toFixed(1);
+                const timeLeft = Math.max(1, Math.round((100 - percentage) / 8));
+                const speed = (Math.random() * 2 + 1.5).toFixed(1);
+                details.textContent = `تم تحميل: ${downloaded} من 20.3 ميجابايت\nالسرعة: ${speed} MB/s\nالوقت المتبقي: ${timeLeft} ثانية\nمتبقي: ${remaining} ميجابايت`;
+            } else {
+                message.textContent = 'تم التحميل! جاري الاستخراج...';
+                details.textContent = 'جاري استخراج الملفات...\nتكوين phpMyAdmin\nكتابة ملفات التكوين';
+            }
+        }
+        
+        function autoProgress() {
+            let currentProgress = 0;
+            const interval = setInterval(() => {
+                currentProgress += Math.random() * 8 + 2;
+                if (currentProgress >= 100) {
+                    currentProgress = 100;
+                    clearInterval(interval);
+                }
+                simulateProgress(Math.round(currentProgress));
+            }, 500);
+        }
+        
+        // تشغيل تلقائي عند التحميل
+        setTimeout(() => {
+            autoProgress();
+        }, 2000);
+    </script>
+</body>
+</html> 

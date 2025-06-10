@@ -1,0 +1,64 @@
+{
+  "name": "my-dev-box",
+  "version": "1.0.0",
+  "description": "بيئة تطوير محلية متقدمة - MyDevBox",
+  "main": "main.js",
+  "author": "MyDevBox Team",
+  "license": "MIT",
+  "homepage": "https://github.com/mydevbox/mydevbox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mydevbox/mydevbox.git"
+  },
+  "keywords": [
+    "development",
+    "local-server",
+    "apache",
+    "mysql",
+    "php",
+    "phpmyadmin",
+    "laragon-alternative"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.mydevbox.app",
+    "productName": "MyDevBox",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**/*",
+      "!node_modules/**/*",
+      "!*.log"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MyDevBox"
+    }
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "electron-updater": "^6.6.2",
+    "extract-zip": "^2.0.1",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}

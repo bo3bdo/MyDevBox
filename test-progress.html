@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معاينة نافذة التقدم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            min-width: 400px;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .message {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 65%;
+            position: relative;
+        }
+        
+        .progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .details {
+            font-size: 14px;
+            opacity: 0.8;
+            white-space: pre-line;
+            line-height: 1.5;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .demo-buttons {
+            margin-top: 20px;
+        }
+        
+        .demo-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .demo-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">تحميل phpMyAdmin</div>
+        <div class="message" id="message">تحميل phpMyAdmin... 65%</div>
+        <div class="loading-spinner"></div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">65%</div>
+            <div class="details" id="details">تم تحميل: 13.2 من 20.3 ميجابايت
+السرعة: 2.5 MB/s
+الوقت المتبقي: 3 ثواني</div>
+        </div>
+        
+        <div class="demo-buttons">
+            <button class="demo-button" onclick="simulateProgress(25)">25%</button>
+            <button class="demo-button" onclick="simulateProgress(50)">50%</button>
+            <button class="demo-button" onclick="simulateProgress(75)">75%</button>
+            <button class="demo-button" onclick="simulateProgress(100)">100%</button>
+        </div>
+    </div>
+
+    <script>
+        function simulateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const message = document.getElementById('message');
+            const details = document.getElementById('details');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = percentage + '%';
+            
+            if (percentage < 100) {
+                message.textContent = `تحميل phpMyAdmin... ${percentage}%`;
+                const downloaded = (20.3 * percentage / 100).toFixed(1);
+                const timeLeft = Math.max(1, Math.round((100 - percentage) / 10));
+                details.textContent = `تم تحميل: ${downloaded} من 20.3 ميجابايت\nالسرعة: 2.5 MB/s\nالوقت المتبقي: ${timeLeft} ثانية`;
+            } else {
+                message.textContent = 'تم التحميل! جاري الاستخراج...';
+                details.textContent = 'جاري استخراج الملفات...';
+            }
+        }
+        
+        // محاكاة التقدم التلقائي
+        let currentProgress = 65;
+        setInterval(() => {
+            if (currentProgress < 100) {
+                currentProgress += Math.random() * 5;
+                if (currentProgress > 100) currentProgress = 100;
+                simulateProgress(Math.round(currentProgress));
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 

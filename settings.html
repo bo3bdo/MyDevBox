@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات MyDevBox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .setting-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .setting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .setting-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .setting-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-left: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .setting-info h3 {
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            right: 33px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+
+        .status-online {
+            background: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        .status-offline {
+            background: #f44336;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); }
+            50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.9); }
+            100% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); }
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .version-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* تخصيص scrollbar */
+        .content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* تحسينات للـ responsive */
+        @media (max-width: 480px) {
+            .settings-grid {
+                padding: 0 10px;
+            }
+            
+            .setting-card {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ إعدادات MyDevBox</h1>
+            <p>إدارة تطبيق بيئة التطوير المحلية</p>
+        </div>
+
+        <div class="content">
+            <div class="settings-grid">
+                <!-- إعدادات عامة -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">🚀</div>
+                        <div class="setting-info">
+                            <h3>بدء التشغيل التلقائي</h3>
+                            <p>تشغيل MyDevBox تلقائياً عند بدء تشغيل Windows</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="toggle-switch active" id="autoStart" onclick="toggleSetting('autoStart')"></div>
+                    </div>
+                </div>
+
+                <!-- إعدادات النظام -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">👁️</div>
+                        <div class="setting-info">
+                            <h3>إخفاء من شريط المهام</h3>
+                            <p>إخفاء التطبيق من شريط المهام (يظهر في النظام فقط)</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="toggle-switch active" id="hideTaskbar" onclick="toggleSetting('hideTaskbar')"></div>
+                    </div>
+                </div>
+
+                <!-- إعدادات الأداء -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">⚡</div>
+                        <div class="setting-info">
+                            <h3>تسريع الأجهزة</h3>
+                            <p>استخدام تسريع GPU لتحسين الأداء</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="toggle-switch active" id="hardwareAccel" onclick="toggleSetting('hardwareAccel')"></div>
+                    </div>
+                </div>
+
+                <!-- حالة الخدمات -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">🔧</div>
+                        <div class="setting-info">
+                            <h3>حالة الخدمات</h3>
+                            <p>مراقبة حالة Apache و MySQL</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div style="display: flex; flex-direction: column; align-items: end; gap: 10px;">
+                            <div style="display: flex; align-items: center;">
+                                <span style="margin-left: 10px;">Apache</span>
+                                <span class="status-indicator status-offline" id="apacheStatus"></span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <span style="margin-left: 10px;">MySQL</span>
+                                <span class="status-indicator status-offline" id="mysqlStatus"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إدارة phpMyAdmin -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">🗄️</div>
+                        <div class="setting-info">
+                            <h3>إدارة phpMyAdmin</h3>
+                            <p>تثبيت أو إزالة phpMyAdmin لإدارة قواعد البيانات</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn" id="phpMyAdminBtn" onclick="togglePhpMyAdmin()">
+                                تثبيت phpMyAdmin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات المتقدمة -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">🛠️</div>
+                        <div class="setting-info">
+                            <h3>إعدادات متقدمة</h3>
+                            <p>فتح مجلدات التكوين والملفات</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn" onclick="openFolder('www')">مجلد www</button>
+                            <button class="btn" onclick="openFolder('config')">مجلد التكوين</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التثبيت السريع -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">⚡</div>
+                        <div class="setting-info">
+                            <h3>التثبيت السريع للبرامج</h3>
+                            <p>تثبيت Laravel, WordPress وغيرها بنقرة واحدة</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <button class="btn" onclick="openQuickInstallWindow()">
+                            فتح التثبيت السريع
+                        </button>
+                    </div>
+                </div>
+
+                <!-- إعادة تعيين -->
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">🔄</div>
+                        <div class="setting-info">
+                            <h3>إعادة تعيين التطبيق</h3>
+                            <p>إعادة تعيين جميع الإعدادات للقيم الافتراضية</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <button class="btn btn-secondary" onclick="resetSettings()">
+                            إعادة تعيين
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-info">
+                MyDevBox - بيئة تطوير محلية متقدمة
+            </div>
+            <div class="version-badge" id="appVersion">
+                v1.0.0
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تحميل الإعدادات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadSettings();
+            await updateServiceStatus();
+            await loadAppVersion();
+            
+            // تحديث حالة الخدمات كل 5 ثوان
+            setInterval(updateServiceStatus, 5000);
+        });
+
+        // تحميل الإعدادات
+        async function loadSettings() {
+            try {
+                const settings = await window.electronAPI.settings.getAll();
+                
+                // تطبيق الإعدادات على الواجهة
+                updateToggle('autoStart', settings.autoStart !== false);
+                updateToggle('hideTaskbar', settings.hideTaskbar !== false);
+                updateToggle('hardwareAccel', settings.hardwareAccel !== false);
+                
+            } catch (error) {
+                console.error('خطأ في تحميل الإعدادات:', error);
+            }
+        }
+
+        // تحديث حالة الخدمات
+        async function updateServiceStatus() {
+            try {
+                const apacheStatus = await window.electronAPI.services.status('apache');
+                const mysqlStatus = await window.electronAPI.services.status('mysql');
+                
+                document.getElementById('apacheStatus').className = 
+                    `status-indicator ${apacheStatus ? 'status-online' : 'status-offline'}`;
+                document.getElementById('mysqlStatus').className = 
+                    `status-indicator ${mysqlStatus ? 'status-online' : 'status-offline'}`;
+                    
+            } catch (error) {
+                console.error('خطأ في تحديث حالة الخدمات:', error);
+            }
+        }
+
+        // تحميل إصدار التطبيق
+        async function loadAppVersion() {
+            try {
+                const version = await window.electronAPI.system.getAppVersion();
+                document.getElementById('appVersion').textContent = `v${version}`;
+            } catch (error) {
+                console.error('خطأ في تحميل إصدار التطبيق:', error);
+            }
+        }
+
+        // تبديل الإعدادات
+        async function toggleSetting(settingName) {
+            const toggle = document.getElementById(settingName);
+            const isActive = toggle.classList.contains('active');
+            
+            try {
+                await window.electronAPI.settings.set(settingName, !isActive);
+                updateToggle(settingName, !isActive);
+                
+                // إظهار إشعار
+                await window.electronAPI.notifications.show(
+                    'تم تحديث الإعدادات',
+                    `تم ${!isActive ? 'تفعيل' : 'إلغاء'} ${getSettingDisplayName(settingName)}`
+                );
+                
+            } catch (error) {
+                console.error('خطأ في تحديث الإعداد:', error);
+            }
+        }
+
+        // تحديث مظهر Toggle
+        function updateToggle(settingName, isActive) {
+            const toggle = document.getElementById(settingName);
+            if (isActive) {
+                toggle.classList.add('active');
+            } else {
+                toggle.classList.remove('active');
+            }
+        }
+
+        // الحصول على اسم الإعداد للعرض
+        function getSettingDisplayName(settingName) {
+            const names = {
+                'autoStart': 'بدء التشغيل التلقائي',
+                'hideTaskbar': 'إخفاء من شريط المهام',
+                'hardwareAccel': 'تسريع الأجهزة'
+            };
+            return names[settingName] || settingName;
+        }
+
+        // إدارة phpMyAdmin
+        async function togglePhpMyAdmin() {
+            try {
+                const isInstalled = await window.electronAPI.phpMyAdmin.isInstalled();
+                const btn = document.getElementById('phpMyAdminBtn');
+                
+                if (isInstalled) {
+                    btn.textContent = 'جاري الحذف...';
+                    btn.disabled = true;
+                    
+                    await window.electronAPI.phpMyAdmin.remove();
+                    btn.textContent = 'تثبيت phpMyAdmin';
+                    
+                    await window.electronAPI.notifications.show(
+                        'تم حذف phpMyAdmin',
+                        'تم حذف phpMyAdmin بنجاح'
+                    );
+                    
+                } else {
+                    btn.textContent = 'جاري التثبيت...';
+                    btn.disabled = true;
+                    
+                    await window.electronAPI.phpMyAdmin.install();
+                    btn.textContent = 'حذف phpMyAdmin';
+                    
+                    await window.electronAPI.notifications.show(
+                        'تم تثبيت phpMyAdmin',
+                        'تم تثبيت phpMyAdmin بنجاح'
+                    );
+                }
+                
+                btn.disabled = false;
+                
+            } catch (error) {
+                console.error('خطأ في إدارة phpMyAdmin:', error);
+                document.getElementById('phpMyAdminBtn').disabled = false;
+            }
+        }
+
+        // فتح المجلدات
+        async function openFolder(folderName) {
+            try {
+                await window.electronAPI.sites.openInBrowser(`file://${process.cwd()}/${folderName}`);
+            } catch (error) {
+                console.error('خطأ في فتح المجلد:', error);
+            }
+        }
+
+        // فتح نافذة التثبيت السريع
+        async function openQuickInstallWindow() {
+            // إنشاء نافذة منبثقة للتثبيت السريع
+            const quickInstallHtml = `
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التثبيت السريع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .app-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+        
+        .app-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .app-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .app-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .app-requirements {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .requirement {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .requirement.available {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .requirement.missing {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .install-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            width: 100%;
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .install-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ التثبيت السريع للبرامج</h1>
+            <p>اختر البرنامج الذي تريد تثبيته</p>
+        </div>
+        
+        <div class="content">
+            <div class="apps-grid" id="appsGrid">
+                <!-- سيتم ملؤها بـ JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const apps = [
+            {
+                id: 'laravel',
+                name: 'Laravel',
+                icon: '🔶',
+                description: 'إطار عمل PHP الحديث والقوي',
+                requirements: ['php', 'composer'],
+                database: true
+            },
+            {
+                id: 'wordpress',
+                name: 'WordPress',
+                icon: '🟦',
+                description: 'نظام إدارة المحتوى الأشهر في العالم',
+                requirements: ['php', 'mysql'],
+                database: true
+            },
+            {
+                id: 'codeigniter',
+                name: 'CodeIgniter',
+                icon: '🔥',
+                description: 'إطار عمل PHP خفيف وسريع',
+                requirements: ['php'],
+                database: true
+            },
+            {
+                id: 'symfony',
+                name: 'Symfony',
+                icon: '🎼',
+                description: 'إطار عمل PHP احترافي ومرن',
+                requirements: ['php', 'composer'],
+                database: true
+            },
+            {
+                id: 'cakephp',
+                name: 'CakePHP',
+                icon: '🍰',
+                description: 'إطار عمل PHP سريع التطوير',
+                requirements: ['php', 'composer'],
+                database: true
+            },
+            {
+                id: 'express',
+                name: 'Express.js',
+                icon: '⚡',
+                description: 'إطار عمل Node.js سريع ومرن',
+                requirements: ['node', 'npm'],
+                database: false
+            },
+            {
+                id: 'vue',
+                name: 'Vue.js',
+                icon: '📱',
+                description: 'إطار عمل JavaScript تدريجي',
+                requirements: ['node', 'npm'],
+                database: false
+            },
+            {
+                id: 'react',
+                name: 'React',
+                icon: '⚛️',
+                description: 'مكتبة JavaScript لبناء واجهات المستخدم',
+                requirements: ['node', 'npm'],
+                database: false
+            }
+        ];
+        
+        async function renderApps() {
+            const grid = document.getElementById('appsGrid');
+            
+            for (const app of apps) {
+                const card = document.createElement('div');
+                card.className = 'app-card';
+                
+                // فحص المتطلبات (محاكي - سيتم استبداله بـ API حقيقي)
+                const requirements = app.requirements.map(req => ({
+                    name: req,
+                    available: Math.random() > 0.3 // محاكي
+                }));
+                
+                const allAvailable = requirements.every(req => req.available);
+                
+                card.innerHTML = 
+                    '<div class="app-icon">' + app.icon + '</div>' +
+                    '<div class="app-name">' + app.name + '</div>' +
+                    '<div class="app-description">' + app.description + '</div>' +
+                    '<div class="app-requirements">' +
+                        requirements.map(req => 
+                            '<span class="requirement ' + (req.available ? 'available' : 'missing') + '">' + req.name + '</span>'
+                        ).join('') +
+                    '</div>' +
+                    '<button class="install-btn" ' + (!allAvailable ? 'disabled' : '') + 
+                            ' onclick="installApp(' + "'" + app.id + "'" + ', ' + "'" + app.name + "'" + ')">' +
+                        (allAvailable ? 'تثبيت الآن' : 'متطلبات مفقودة') +
+                    '</button>';
+                
+                grid.appendChild(card);
+            }
+        }
+        
+                 function installApp(appId, appName) {
+             const projectName = prompt('اسم المشروع لـ ' + appName + ':', 'my-project');
+             if (projectName) {
+                 alert('سيتم تثبيت ' + appName + ' باسم: ' + projectName);
+                 // هنا سيتم استدعاء API التثبيت
+             }
+         }
+        
+        // تحميل التطبيقات عند بدء الصفحة
+        renderApps();
+    </script>
+</body>
+</html>`;
+
+            // فتح نافذة جديدة للتثبيت السريع
+            const newWindow = window.open('', '_blank', 'width=800,height=600,resizable=yes,scrollbars=yes');
+            newWindow.document.write(quickInstallHtml);
+            newWindow.document.close();
+        }
+
+        // إعادة تعيين الإعدادات
+        async function resetSettings() {
+            const result = confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات؟');
+            
+            if (result) {
+                try {
+                    // إعادة تعيين الإعدادات للقيم الافتراضية
+                    await window.electronAPI.settings.set('autoStart', true);
+                    await window.electronAPI.settings.set('hideTaskbar', true);
+                    await window.electronAPI.settings.set('hardwareAccel', true);
+                    
+                    // إعادة تحميل الإعدادات
+                    await loadSettings();
+                    
+                    await window.electronAPI.notifications.show(
+                        'تم إعادة التعيين',
+                        'تم إعادة تعيين جميع الإعدادات بنجاح'
+                    );
+                    
+                } catch (error) {
+                    console.error('خطأ في إعادة تعيين الإعدادات:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html> 
